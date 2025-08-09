@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @Service
 public class UsuarioService {
-//    salvar, listar, pegar um, atualizar, deletar
+
 
     @Autowired
     private UsuarioRepository repository;
@@ -29,13 +29,11 @@ public class UsuarioService {
     }
 
     public UsuarioModel pegaUmUsuario(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+        return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
     }
 
     public UsuarioModel atualizaUsuario(Integer id, UsuarioDto dto) {
-        UsuarioModel user = repository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+        UsuarioModel user = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
         BeanUtils.copyProperties(dto, user, "id");
         return repository.save(user);
     }
