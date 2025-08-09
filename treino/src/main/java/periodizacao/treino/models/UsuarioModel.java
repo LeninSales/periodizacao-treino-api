@@ -17,5 +17,4 @@ public class UsuarioModel {
     private String name;
 
 
-
 }
