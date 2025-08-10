@@ -8,6 +8,7 @@ import periodizacao.treino.models.UsuarioModel;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Component
 public class UsuarioController {
@@ -16,22 +17,28 @@ public class UsuarioController {
     private UsuarioService service;
 
     public UsuarioModel criarUsuario(UsuarioDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Dados do usuario não informados.");
+        }
         return service.salvaUsuario(dto);
     }
 
     public List<UsuarioModel> listarUsuarios() {
         List<UsuarioModel> usuarios = service.listaUsuarios();
-        if(usuarios.isEmpty()){
-            throw new IllegalStateException("Nenhum usuário encontrado.");
+        if (usuarios.isEmpty()) {
+            throw new NoSuchElementException("Nenhum usuário encontrado.");
         }
         return usuarios;
     }
 
-    public UsuarioModel buscarUsuario(Integer id) {
+    public UsuarioModel buscarUmUsuario(Integer id) {
         return service.pegaUmUsuario(id);
     }
 
     public UsuarioModel atualizarUsuario(Integer id, UsuarioDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Dados do exercício não informados.");
+        }
         return service.atualizaUsuario(id, dto);
     }
 
