@@ -37,7 +37,7 @@ public class UsuarioController {
 
     public UsuarioModel atualizarUsuario(Integer id, UsuarioDto dto) {
         if (dto == null) {
-            throw new IllegalArgumentException("Dados do exercício não informados.");
+            throw new IllegalArgumentException("Dados do usuario não informados.");
         }
         return service.atualizaUsuario(id, dto);
     }
