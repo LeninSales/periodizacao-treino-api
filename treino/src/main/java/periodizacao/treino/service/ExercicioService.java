@@ -4,7 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import periodizacao.treino.dto.ExercicioDto;
-
 import periodizacao.treino.models.ExercicioModel;
 import periodizacao.treino.repository.ExercicioRepository;
 
