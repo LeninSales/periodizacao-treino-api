@@ -28,15 +28,17 @@ public class UsuarioService {
         return repository.findAll();
     }
 
-    public UsuarioModel pegaUmUsuario(Integer id) {
+    public UsuarioModel pegaUmUsuarioPorId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
     }
 
     public UsuarioModel atualizaUsuario(Integer id, UsuarioDto dto) {
         UsuarioModel user = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
-        BeanUtils.copyProperties(dto, user, "id");
+        user.setNome(dto.nome());
+
         return repository.save(user);
     }
+
 
     public void deletaUsuario(Integer id) {
         if (!repository.existsById(id)) {
