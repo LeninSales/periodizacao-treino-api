@@ -7,6 +7,7 @@ import periodizacao.treino.dto.ExercicioDto;
 import periodizacao.treino.models.ExercicioModel;
 import periodizacao.treino.repository.ExercicioRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,7 +27,15 @@ public class ExercicioService {
         return repository.findAll();
     }
 
-    public ExercicioModel pegaUmExercicio(Integer id) {
+    public List<ExercicioModel> listaExerciciosEExeciciosPorUsuario(ExercicioDto dto) {
+        List<ExercicioModel> exerciciosGeral = new ArrayList<>();
+        exerciciosGeral.addAll(repository.findByUsuarioId(dto.usuarioID()));
+        exerciciosGeral.addAll(repository.findByUsuarioIdIsNull());
+
+        return exerciciosGeral;
+    }
+
+    public ExercicioModel pegaUmExercicioPorId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new NoSuchElementException("Exercicio não encontrado."));
     }
 
