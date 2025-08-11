@@ -19,25 +19,33 @@ public class RotinaService {
     @Autowired
     private RotinaRepository repository;
 
+    public RotinaModel salvarRotina(RotinaDto dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("Dados da rotina não informados.");
+        }
+        RotinaModel rotinaNova = new RotinaModel();
 
-    public Optional<RotinaModel> buscarRotinaPorId(Integer id) {
-        return repository.findById(id);
+        BeanUtils.copyProperties(dto, rotinaNova);
+        return repository.save(rotinaNova);
     }
 
-    public List<RotinaModel> buscarRotinasPorUsuarioEDia(Integer usuarioId, DiaSemana diaSemana) {
-        return repository.findByUsuarioIdAndDiaSemana(usuarioId, diaSemana);
+    public RotinaModel buscarRotinaPorId(Integer rotinaId) {
+        return repository.findById(rotinaId).orElseThrow(() -> new NoSuchElementException("Rotina não encontrada."));
     }
 
-    public RotinaModel atualizarRotina(Integer id, RotinaDto dto) {
-        RotinaModel rotinaExistente = repository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Rotina não encontrada com o ID: " + id));
+    public RotinaModel atualizaRotina(RotinaDto dto, Integer rotinaId) {
+        RotinaModel rotinaExistente = repository.findById(rotinaId)
+                .orElseThrow(() -> new NoSuchElementException("Rotina não encontrada com o ID: " + rotinaId));
 
-        BeanUtils.copyProperties(dto, rotinaExistente, "id");
-
+        rotinaExistente.setNome(dto.nome());
+        rotinaExistente.setDiaSemana(dto.diaSemana());
         return repository.save(rotinaExistente);
     }
 
-    public void deletarRotina(Integer id) {
-        repository.deleteById(id);
+    public void deletaRotina(Integer rotinaId) {
+        if (!repository.existsById(rotinaId)) {
+            throw new NoSuchElementException("Rotina não encontrada.");
+        }
+        repository.deleteById(rotinaId);
     }
 }

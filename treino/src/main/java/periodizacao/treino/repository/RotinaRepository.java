@@ -7,6 +7,5 @@ import periodizacao.treino.models.RotinaModel;
 import java.util.List;
 
 public interface RotinaRepository extends JpaRepository<RotinaModel, Integer> {
-    List<RotinaModel> findByUsuarioIdAndDiaSemana(Integer usuarioId, DiaSemana diaSemana);
-}
+    List<RotinaModel> findByUsuarioId(Integer usuarioId);}
 
