@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import periodizacao.treino.dto.ExercicioDto;
 import periodizacao.treino.models.ExercicioModel;
+import periodizacao.treino.models.UsuarioModel;
 import periodizacao.treino.repository.ExercicioRepository;
+import periodizacao.treino.repository.UsuarioRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,9 @@ public class ExercicioService {
 
     @Autowired
     private ExercicioRepository repository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public ExercicioModel salvaExercicio(ExercicioDto dto) {
         ExercicioModel exercicio = new ExercicioModel();
@@ -40,8 +45,18 @@ public class ExercicioService {
     }
 
     public ExercicioModel atualizaExercicio(Integer id, ExercicioDto dto) {
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Exercicio não encontrado."));
-        BeanUtils.copyProperties(dto, exercicio, "id");
+        ExercicioModel exercicio = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Exercicio não encontrado."));
+
+        if (dto.usuarioID() != null) {
+            UsuarioModel usuario = usuarioRepository.findById(dto.usuarioID())
+                    .orElseThrow(() -> new NoSuchElementException("Usuário não encontrado."));
+            exercicio.setUsuarioId(usuario);
+        } else {
+            exercicio.setUsuarioId(null);
+        }
+        exercicio.setNome(dto.nome());
+
         return repository.save(exercicio);
     }
 
