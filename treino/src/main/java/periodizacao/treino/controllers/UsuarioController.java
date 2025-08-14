@@ -32,7 +32,7 @@ public class UsuarioController {
     }
 
     public UsuarioModel buscarUmUsuario(Integer id) {
-        return service.pegaUmUsuario(id);
+        return service.pegaUmUsuarioPorId(id);
     }
 
     public UsuarioModel atualizarUsuario(Integer id, UsuarioDto dto) {

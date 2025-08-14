@@ -30,7 +30,7 @@ public class ExercicioController {
     }
 
     public ExercicioModel buscarUmExercicio(Integer id) {
-        ExercicioModel exercicio = service.pegaUmExercicio(id);
+        ExercicioModel exercicio = service.pegaUmExercicioPorId(id);
         return exercicio;
     }
 
